@@ -13,8 +13,8 @@ import re
 
 
 #-------------------------------------------------------------------------------
-# TODO: add argument 'file' to pass the root name of the file
-def ListTextureLayers(texturepath):
+# DONE: added argument 'file' to pass the root name of the file
+def ListTextureLayers(texturepath, file):
     '''This function lists all the texture layers present in the folder
     regardless of their name. This means that for the time being this code is
     suitable for performing the prediction on one tile at time. If in future
@@ -22,15 +22,18 @@ def ListTextureLayers(texturepath):
     root name, and here you have to match it with the texture name.
     '''
     texturelist = []
-    # TODO: add a check for texture name matching the file root name
+
     # for file in os.listdir(str(texturepath)):
     #     if file.endswith(".tif"):
     #         texturelist.append(file)
     # return texturelist
 
-    for file in os.listdir(str(texturepath)):
-        if file.endswith(".tif"):
-            texturelist.append(file)
+
+    # DONE: added a check for texture name matching the file root name
+    for texture in os.listdir(str(texturepath)):
+        match = re.search(file, texture)
+        if match:
+            texturelist.append(texture)
     return texturelist
 
 
