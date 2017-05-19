@@ -30,11 +30,14 @@ resultPath  = args.resultPath
 inputFile   = args.inputFile
 
 
+pickleModelFolder = os.path.join(orthoPath, "pickle/model/")
+
+
 feat = defaultdict(list)
 
 count = 0
 picklemodel = "modelKNN"
-model = read("pickle/model/" + str(picklemodel))
+model = read( pickleModelFolder + str(picklemodel))
 
 
 Classifier = ImageClassifier(modeltype = 2, \
