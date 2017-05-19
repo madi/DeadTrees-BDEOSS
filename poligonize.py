@@ -6,22 +6,35 @@ __email__ = "lmartisa@gmail.com"
 
 from osgeo import gdal, ogr,osr
 import numpy as np
-#import mlh
 import time
-#from movingwindow import *
 from osgeo import gdal, gdalnumeric, ogr, osr,gdal_array
 import os
 import sys
+import argparse
+
+parser = argparse.ArgumentParser(description = "Poligonize")
+
+parser.add_argument('--inputPath', dest = "inputPath",
+                                 help = "Input Path")
+parser.add_argument('--outputPath', dest = "outputPath",
+                                 help = "Output Path")
+parser.add_argument('--inputFile', dest = "inputFile",
+                                 help = "InputFile name to be processed, root \
+                                 name without extension")
+
+args = parser.parse_args()
+
+inputPath  = args.inputPath
+outputPath = args.outputPath
+inputFile  = args.inputFile
+
+rasterPath = os.path.join(inputPath,  inputFile + "_smooth.tif")
+shapePath  = os.path.join(outputPath, inputFile + ".shp")
 
 
-rasterpath = "/home/v-user/shared/Documents/Documents/CANHEMON/classification_tests/results_texture/"
-shapepath = "/home/v-user/shared/Documents/Documents/CANHEMON/classification_tests/results_texture/shape/"
+def GetRasterDataSource(rasterPath, inputFile):
 
-
-
-def GetRasterDataSource (name, rasterpath):
-
-    src_ds = gdal.Open(rasterpath + name + '.tif')
+    src_ds = gdal.Open(rasterPath)
     projection = src_ds.GetProjection()
     geotrans = src_ds.GetGeoTransform()
     XOriginal = src_ds.RasterXSize
@@ -43,8 +56,10 @@ def GetRasterDataSource (name, rasterpath):
     return srcarray,projection,geotrans, shape
 
 
-def polygonize(shapepath, file, rasterpath):
-    srcarray,projection,geotrans, shape = GetRasterDataSource(file, rasterpath)
+def polygonize(shapePath, rasterPath, inputFile):
+
+    srcarray, projection, geotrans, shape = GetRasterDataSource(rasterPath, inputFile)
+
     print "Start polygonizing.."
     start = time.time()
     srcarray[srcarray > 1] = 0 #we are interested in the class 1, we put everything else to 0
@@ -61,9 +76,9 @@ def polygonize(shapepath, file, rasterpath):
     srcband = src_ds.GetRasterBand(1)
 
     drv = ogr.GetDriverByName("ESRI Shapefile")
-    dst_ds = drv.CreateDataSource(shapepath + file + ".shp")
+    dst_ds = drv.CreateDataSource(shapePath)
 
-    dst_layer = dst_ds.CreateLayer(shapepath + file, srs = srs)
+    dst_layer = dst_ds.CreateLayer(shapePath, srs = srs)
     new_field = ogr.FieldDefn("type", ogr.OFTInteger)
     dst_layer.CreateField(new_field)
 
@@ -96,21 +111,19 @@ def polygonize(shapepath, file, rasterpath):
     dst_ds = None
 
     print "*---------------------------*"
-    print "Shapefile correctly saved in: " + shapepath
+    print "Shapefile correctly saved in: " + shapePath
     end = time.time()
     print "Time for polygonizing: "
-    print (end-start)
+    print (end - start)
 
 
-#TODO: remove this loop
-def main(rasterpath, shapepath):
-    # for file in os.listdir(rasterpath):
-    #     if file.endswith("_smooth.tif"):
-    #         file = os.path.splitext(file)[0]
-    #         print "Opening.. " + file + ".tif"
-    #         polygonize(shapepath, file, rasterpath)
+#DONE: sequentiated the code removing the loops
+def main(rasterPath, shapePath, inputFile):
+
+    print "Opening.. " + rasterPath
+    polygonize(shapePath, rasterPath, inputFile)
 
 
 
 if __name__ == "__main__":
-    main(rasterpath, shapepath)
+    main(rasterPath, shapePath, inputFile)
