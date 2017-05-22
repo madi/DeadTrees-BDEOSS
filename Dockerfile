@@ -82,7 +82,6 @@ RUN svn checkout \
 RUN svn checkout \
     https://svn.osgeo.org/grass/grass-addons /home/canhemon/dev/grass_addons
 
-
 # Add config file for GRASS 7
 ADD c7.sh /home/canhemon/dev/grass_trunk/c7.sh
 
@@ -138,9 +137,9 @@ RUN echo 'install.packages("Reol", repos="http://cran.us.r-project.org", \
     dependencies=TRUE)' > /home/canhemon/dev/packages.R \
     && Rscript /home/canhemon/dev/packages.R
 
-USER root
+#USER root
 # Add file for the Maxent model to be used by R lib
-ADD maxent.jar /usr/local/lib/R/site-library/dismo/java/maxent.jar
+#ADD maxent.jar /usr/local/lib/R/site-library/dismo/java/maxent.jar
 
 WORKDIR /home/canhemon/dev
 USER canhemon
