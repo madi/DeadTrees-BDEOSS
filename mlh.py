@@ -211,10 +211,10 @@ class ImageClassifier:
             # imgaux[3] = nir
             # if you add new layers, add them here
 
-
             texturepath = args[0]
+            basename = args[1]
             # print texturepath
-            img, self.shpOriginal = createTextureArray(texturepath, imgClass)
+            img, self.shpOriginal = createTextureArray(texturepath, imgClass, basename)
             # print "type(img) ", type(img)
             # print "self.shpOriginal ", self.shpOriginal
 
