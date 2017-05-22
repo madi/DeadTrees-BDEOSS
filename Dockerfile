@@ -89,7 +89,7 @@ ADD c7.sh /home/canhemon/dev/grass_trunk/c7.sh
 WORKDIR /home/canhemon/dev/grass_trunk
 
 # added this workaround for running config file because was not executable
-USER root
+#USER root
 WORKDIR /home/canhemon/dev/grass_trunk
 RUN bash ./c7.sh
 
@@ -156,15 +156,6 @@ WORKDIR /home/canhemon
 RUN mkdir -p /home/canhemon/grassdata
 RUN grass73 -text -c EPSG:32629 /home/canhemon/grassdata/temp
 
-# Add file for the main script
-ADD run.sh /home/canhemon/run.sh
-# Add file for processing tree crown detection in FIJI
-#ADD proto.ijm /home/canhemon/dev/proto.ijm
-# Add file for pre-processing in GRASS
-ADD script.sh /home/canhemon/dev/script.sh
-# Add file for post-processing shapefiles
-#ADD cablai.py /home/canhemon/dev/cablai.py
-
 # Define default command.
 CMD ["bash"]
 ENV DEBIAN_FRONTEND=teletype
@@ -176,11 +167,33 @@ RUN apt-get install -y python-rtree libspatialindex-dev python-numpy \
     python-scipy python-matplotlib python-sklearn python-scikits-learn \
 		python-dev python-setuptools python-pip
 
+# Add file for the main script
+ADD run.sh /home/canhemon/run.sh
+
+# Add file for pre-processing in GRASS
+ADD script.sh /home/canhemon/dev/script.sh
+
 ADD texture_common.py /home/canhemon/dev/texture_common.py
 ADD texture_predict.py /home/canhemon/dev/texture_predict.py
 ADD movingwindow.py /home/canhemon/dev/movingwindow.py
 ADD mlh.py /home/canhemon/dev/mlh.py
 ADD poligonize.py /home/canhemon/dev/poligonize.py
 ADD serialize.py /home/canhemon/dev/serialize.py
+ADD clipshape.py /home/canhemon/dev/clipshape.py
 
 ADD /pickle/model/modelKNN.pickle /home/canhemon/dev/pickle/model/modelKNN.pickle
+
+# run test
+ADD data_test_docker/pt599000-4415000.tif \
+  /home/canhemon/data_test_docker/pt599000-4415000.tif
+
+ADD data_test_docker/pt603000-4402000.tif \
+	/home/canhemon/data_test_docker/pt603000-4402000.tif
+
+ADD data_test_docker/dataOut/ \
+	/home/canhemon/data_test_docker/dataOut/
+
+ADD data_test_docker/texturePath/ \
+	/home/canhemon/data_test_docker/texturePath/
+
+RUN bash ./run.sh /home/canhemon/data_test_docker /home/canhemon/texturePath  /home/canhemon/dataOut  pt599000-4415000.tif
