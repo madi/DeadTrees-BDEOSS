@@ -51,8 +51,9 @@ Classifier = ImageClassifier(modeltype = 2, \
 
 file1 = os.path.join(orthoPath, InputFile)
 file = os.path.splitext(InputFile)[0]
+basename = file.split('-')[0] + "_" + file.split('-')[1]
 
-Classifier.ImageToClassify(file1, True, texturePath)
+Classifier.ImageToClassify(file1, True, texturePath, basename)
 
 Classifier.Classify()
 Classifier.SaveImg(resultPath + str(file) + "_classified")
