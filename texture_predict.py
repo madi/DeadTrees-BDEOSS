@@ -56,11 +56,9 @@ basename = file.split('-')[0] + "_" + file.split('-')[1]
 Classifier.ImageToClassify(file1, True, texturePath, basename)
 
 Classifier.Classify()
-Classifier.SaveImg(resultPath + str(file) + "_classified")
+Classifier.SaveImg(resultPath + str(basename) + "_classified")
 
 imgResult = moviw(Classifier.GetClassified(), \
-                        resultPath + str(file) + "_smooth", \
+                        resultPath + str(basename) + "_smooth", \
                         Classifier.GetProjection(), \
                         Classifier.GetGeotrans())
-
-# print "imgResult", imgResult
