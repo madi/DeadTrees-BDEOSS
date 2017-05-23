@@ -181,9 +181,10 @@ ADD poligonize.py /home/canhemon/dev/poligonize.py
 ADD serialize.py /home/canhemon/dev/serialize.py
 ADD clipshape.py /home/canhemon/dev/clipshape.py
 
-ADD /pickle/model/modelKNN.pickle /home/canhemon/dev/pickle/model/modelKNN.pickle
+ADD /pickle/model/modelKNN.pickle /home/canhemon/data_test_docker/pickle/model/modelKNN.pickle
 
 # run test
+#TODO: remove this in prod
 ADD data_test_docker/pt599000-4415000.tif \
   /home/canhemon/data_test_docker/pt599000-4415000.tif
 
@@ -196,4 +197,11 @@ ADD data_test_docker/dataOut/ \
 ADD data_test_docker/texturePath/ \
 	/home/canhemon/data_test_docker/texturePath/
 
-RUN bash ./run.sh /home/canhemon/data_test_docker /home/canhemon/texturePath  /home/canhemon/dataOut  pt599000-4415000.tif
+#TODO: remove this in prod
+ADD data_test_docker/texturePath/pca_text_pt599000_4415000_1.tif \
+	/home/canhemon/data_test_docker/texturePath/pca_text_pt599000_4415000_1.tif
+#TODO: remove this in prod
+ADD data_test_docker/texturePath/pca_text_pt599000_4415000_2.tif \
+	/home/canhemon/data_test_docker/texturePath/pca_text_pt599000_4415000_2.tif
+
+RUN bash ./run.sh /home/canhemon/data_test_docker /home/canhemon/data_test_docker/texturePath  /home/canhemon/data_test_docker/dataOut  pt599000-4415000.tif
