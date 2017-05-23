@@ -65,7 +65,7 @@ def createTextureArray(texturepath, orthopath, file):
     for i in range(len(texturelist)):
 
         print "Reading " + str(texturelist[i])
-        texture = gdal.Open(texturepath + str(texturelist[i]))
+        texture = gdal.Open(texturepath + os.sep + str(texturelist[i]))
         imgOriginal.GetRasterBand(i + 5).WriteArray((texture.GetRasterBand(1).ReadAsArray()).astype('uint16'))
         texture.FlushCache()
         texture = None
