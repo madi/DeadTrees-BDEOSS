@@ -27,7 +27,7 @@ args = parser.parse_args()
 orthoPath   = args.orthoPath
 texturePath = args.texturePath
 resultPath  = args.resultPath
-inputFile   = args.inputFile
+InputFile   = args.InputFile
 
 
 pickleModelFolder = os.path.join(orthoPath, "pickle/model/")
@@ -56,9 +56,9 @@ basename = file.split('-')[0] + "_" + file.split('-')[1]
 Classifier.ImageToClassify(file1, True, texturePath, basename)
 
 Classifier.Classify()
-Classifier.SaveImg(resultPath + str(basename) + "_classified")
+Classifier.SaveImg(resultPath + os.sep + str(basename) + "_classified")
 
 imgResult = moviw(Classifier.GetClassified(), \
-                        resultPath + str(basename) + "_smooth", \
+                        resultPath + os.sep + str(basename) + "_smooth", \
                         Classifier.GetProjection(), \
                         Classifier.GetGeotrans())
