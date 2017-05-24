@@ -24,7 +24,10 @@ export DISPLAY=:1.0
 mkdir -p $HOME/grassdata
 MYGISDBASE=$HOME/grassdata
 #create temporary location from the EPSG code of the tile
+
+#TODO: comment this in test
 grass73 --text -c $1/$4 $HOME/grassdata/tmplocation  --exec $HOME/dev/script.sh $1 $2 $3 $4
+#grass73 --text  $HOME/grassdata/tmplocation  --exec $HOME/dev/script.sh $1 $2 $3 $4
 # Clean up the mess
-rm -rf $HOME/grassdata/tmplocation
+#rm -rf $HOME/grassdata/tmplocation
 python /home/canhemon/dev/texture_predict.py --orthoPath=$1 --texturePath=$2 --resultPath=$3 --InputFile=$4
