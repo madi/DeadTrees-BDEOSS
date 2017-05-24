@@ -160,7 +160,7 @@ ENV DEBIAN_FRONTEND=teletype
 
 # Dependencies for DeadTrees model
 USER root
-RUN apt-get update && apt-get upgrade -y
+#RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y python-rtree libspatialindex-dev python-numpy \
     python-scipy python-matplotlib python-sklearn python-scikits-learn \
 		python-dev python-setuptools python-pip
@@ -183,23 +183,23 @@ ADD /pickle/model/modelKNN.pickle /home/canhemon/data_test_docker/pickle/model/m
 
 # run test
 #TODO: remove this in prod
-ADD data_test_docker/pt599000-4415000.tif \
-  /home/canhemon/data_test_docker/pt599000-4415000.tif
+#ADD data_test_docker/pt599000-4415000.tif \
+#  /home/canhemon/data_test_docker/pt599000-4415000.tif
 
-ADD data_test_docker/pt603000-4402000.tif \
-	/home/canhemon/data_test_docker/pt603000-4402000.tif
+#ADD data_test_docker/pt603000-4402000.tif \
+#	/home/canhemon/data_test_docker/pt603000-4402000.tif
 
-ADD data_test_docker/dataOut/ \
-	/home/canhemon/data_test_docker/dataOut/
+#ADD data_test_docker/dataOut/ \
+#	/home/canhemon/data_test_docker/dataOut/
 
-ADD data_test_docker/texturePath/ \
-	/home/canhemon/data_test_docker/texturePath/
+#ADD data_test_docker/texturePath/ \
+#	/home/canhemon/data_test_docker/texturePath/
 
 #TODO: remove this in prod
-ADD data_test_docker/texturePath/pca_text_pt599000_4415000_1.tif \
-	/home/canhemon/data_test_docker/texturePath/pca_text_pt599000_4415000_1.tif
+#ADD data_test_docker/texturePath/pca_text_pt599000_4415000_1.tif \
+#	/home/canhemon/data_test_docker/texturePath/pca_text_pt599000_4415000_1.tif
 #TODO: remove this in prod
-ADD data_test_docker/texturePath/pca_text_pt599000_4415000_2.tif \
-	/home/canhemon/data_test_docker/texturePath/pca_text_pt599000_4415000_2.tif
+#ADD data_test_docker/texturePath/pca_text_pt599000_4415000_2.tif \
+#	/home/canhemon/data_test_docker/texturePath/pca_text_pt599000_4415000_2.tif
 
-RUN bash ./run.sh /home/canhemon/data_test_docker /home/canhemon/data_test_docker/texturePath  /home/canhemon/data_test_docker/dataOut  pt599000-4415000.tif
+#RUN bash ./run.sh /home/canhemon/data_test_docker /home/canhemon/data_test_docker/texturePath  /home/canhemon/data_test_docker/dataOut  pt599000-4415000.tif
