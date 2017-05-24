@@ -105,7 +105,7 @@ def polygonize(shapePath, rasterPath, inputFile):
 
 
     dst_layer.SyncToDisk()
-    dst_ds.ExecuteSQL("REPACK " + file)
+    dst_ds.ExecuteSQL("REPACK " + inputFile)
 
     print "Number of features after deleting: ", dst_layer.GetFeatureCount()
     dst_ds = None
