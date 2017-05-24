@@ -1,1 +1,1 @@
-sudo docker build -t debian:stretch .
+sudo docker build -t debian:docker5 .

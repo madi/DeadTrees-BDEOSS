@@ -17,8 +17,6 @@ RUN sed -i 's/$/ contrib non-free/g' /etc/apt/sources.list
 
 # Install.
 RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get dist-upgrade -y
 RUN apt-get install -y apt
 RUN apt-get install -y \
 	bc flex byacc m4 automake cmake ccache \
