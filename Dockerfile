@@ -87,7 +87,7 @@ ADD c7.sh /home/canhemon/dev/grass_trunk/c7.sh
 WORKDIR /home/canhemon/dev/grass_trunk
 
 # added this workaround for running config file because was not executable
-#USER root
+USER root
 WORKDIR /home/canhemon/dev/grass_trunk
 RUN bash ./c7.sh
 
