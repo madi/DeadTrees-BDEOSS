@@ -20,14 +20,12 @@ def ListTextureLayers(texturepath, file):
     '''
     texturelist = []
 
-
-
-
     # DONE: added a check for texture name matching the file root name
     for texture in os.listdir(str(texturepath)):
         match = re.search(file, texture)
         if match:
             texturelist.append(texture)
+            texturelist.sort()
     return texturelist
 
 
