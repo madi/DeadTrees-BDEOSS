@@ -25,7 +25,7 @@ def ListTextureLayers(texturepath, file):
         match = re.search(file, texture)
         if match:
             texturelist.append(texture)
-            texturelist.sort()
+    texturelist.sort()
     return texturelist
 
 
