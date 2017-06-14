@@ -31,6 +31,7 @@ MYGISDBASE=$HOME/grassdata
 # Clean up the mess
 #rm -rf $HOME/grassdata/tmplocation
 python /home/canhemon/dev/texture_predict.py --orthoPath=$1 --texturePath=$2 --resultPath=$3 --InputFile=$4
-python /home/canhemon/dev/poligonize.py --inputPath=$3 --outputPath=$3 --inputFile=$basename
+python /home/canhemon/dev/poligonize.py --inputPath=$3 --outputPath=$3 --inputFile=$basename --product='1'
+python /home/canhemon/dev/poligonize.py --inputPath=$3 --outputPath=$3 --inputFile=$basename --product='6' 
 
 #python /home/canhemon/dev/poligonize.py --inputPath=/home/canhemon/data_test_docker/dataOut/ --outputPath=/home/canhemon/data_test_docker/dataOut/ --inputFile=pt599000_4415000
