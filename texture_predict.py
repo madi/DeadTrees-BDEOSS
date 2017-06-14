@@ -36,7 +36,7 @@ pickleModelFolder = os.path.join(orthoPath, "pickle/model/")
 feat = defaultdict(list)
 
 count = 0
-picklemodel = "modelKNN"
+picklemodel = "modelKNN-20161222_5classes"
 model = read( pickleModelFolder + str(picklemodel))
 
 
@@ -45,9 +45,6 @@ Classifier = ImageClassifier(modeltype = 2, \
                              picklemodel = picklemodel, \
                              model = model)
 
-# for file in os.listdir(orthoPath):
-#     if file.endswith(".tif"):
-#         file = os.path.splitext(file)[0]
 
 file1 = os.path.join(orthoPath, InputFile)
 file = os.path.splitext(InputFile)[0]
