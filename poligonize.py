@@ -1,7 +1,7 @@
-__author__ = "Laura Martinez Sanchez"
+__author__ = "Laura Martinez Sanchez, Margherita Di Leo"
 __license__ = "GPL"
-__version__ = "1.0"
-__email__ = "lmartisa@gmail.com"
+__version__ = "2.0"
+__email__ = "lmartisa@gmail.com, dileomargherita@gmail.com"
 
 
 from osgeo import gdal, ogr,osr
@@ -18,6 +18,9 @@ parser.add_argument('--inputPath', dest = "inputPath",
                                  help = "Input Path")
 parser.add_argument('--outputPath', dest = "outputPath",
                                  help = "Output Path")
+parser.add_argument('--product', dest = "product",
+                                 help = "1 for dead trees (spiders), 6 for declining trees")
+
 parser.add_argument('--inputFile', dest = "inputFile",
                                  help = "InputFile name to be processed, root \
                                  name without extension")
@@ -27,6 +30,7 @@ args = parser.parse_args()
 inputPath  = args.inputPath
 outputPath = args.outputPath
 inputFile  = args.inputFile
+product = args.product
 
 rasterPath = os.path.join(inputPath,  inputFile + "_smooth.tif")
 shapePath  = os.path.join(outputPath, inputFile + ".shp")
@@ -62,7 +66,13 @@ def polygonize(shapePath, rasterPath, inputFile):
 
     print "Start polygonizing.."
     start = time.time()
-    srcarray[srcarray > 1] = 0 #we are interested in the class 1, we put everything else to 0
+    if product == '1':
+        srcarray[srcarray > 1] = 0 #we are interested in the class 1, we put everything else to 0
+    elif product == '6':
+        srcarray[srcarray < 6] = 0
+    else:
+        print "Product not available"
+
     drv = gdal.GetDriverByName('MEM')
     srs = osr.SpatialReference()
     srs.ImportFromWkt(projection)
@@ -76,9 +86,9 @@ def polygonize(shapePath, rasterPath, inputFile):
     srcband = src_ds.GetRasterBand(1)
 
     drv = ogr.GetDriverByName("ESRI Shapefile")
-    dst_ds = drv.CreateDataSource(shapePath)
+    dst_ds = drv.CreateDataSource(shapepath + file + "_class" + product + ".shp")
 
-    dst_layer = dst_ds.CreateLayer(shapePath, srs = srs)
+    dst_layer = dst_ds.CreateLayer(shapePath + file, srs = srs)
     new_field = ogr.FieldDefn("type", ogr.OFTInteger)
     dst_layer.CreateField(new_field)
 
@@ -105,7 +115,7 @@ def polygonize(shapePath, rasterPath, inputFile):
 
 
     dst_layer.SyncToDisk()
-    dst_ds.ExecuteSQL("REPACK " + inputFile)
+    dst_ds.ExecuteSQL("REPACK " + inputFile + "_class" + product)
 
     print "Number of features after deleting: ", dst_layer.GetFeatureCount()
     dst_ds = None
