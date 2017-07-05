@@ -32,8 +32,8 @@ outputPath = args.outputPath
 inputFile  = args.inputFile
 product = args.product
 
-rasterPath = os.path.join(inputPath,  inputFile + "_smooth.tif")
-shapePath  = os.path.join(outputPath, inputFile + ".shp")
+rasterPath = inputPath + os.sep + inputFile + "_smooth.tif"
+shapePath  = outputPath + os.sep + inputFile + "_class" + product + ".shp"
 
 
 def GetRasterDataSource(rasterPath, inputFile):
@@ -86,9 +86,9 @@ def polygonize(shapePath, rasterPath, inputFile):
     srcband = src_ds.GetRasterBand(1)
 
     drv = ogr.GetDriverByName("ESRI Shapefile")
-    dst_ds = drv.CreateDataSource(shapepath + file + "_class" + product + ".shp")
+    dst_ds = drv.CreateDataSource(outputPath + os.sep + inputFile + "_class" + str(product) + ".shp")
 
-    dst_layer = dst_ds.CreateLayer(shapePath + file, srs = srs)
+    dst_layer = dst_ds.CreateLayer(outputPath + os.sep + inputFile + "_class" + str(product), srs = srs)
     new_field = ogr.FieldDefn("type", ogr.OFTInteger)
     dst_layer.CreateField(new_field)
 
